@@ -1,21 +1,11 @@
 import React from 'react';
-import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
-  Heading,
-} from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
+import { ChakraProvider, theme } from '@chakra-ui/react';
+import Login from './component/Login';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Heading>Car Booking app</Heading>
+      <Login />
     </ChakraProvider>
   );
 }
