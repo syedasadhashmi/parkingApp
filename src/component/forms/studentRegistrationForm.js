@@ -15,7 +15,7 @@ import {
   Center,
 } from '@chakra-ui/react';
 
-const StudentRegistrationForm = () => {
+const StudentRegistrationForm = ({ onSubmit }) => {
   const [studentName, setStudentName] = useState('');
   const [studentId, setStudentId] = useState('');
   const [studentMobileNo, setStudentMobileNo] = useState('');
@@ -23,39 +23,37 @@ const StudentRegistrationForm = () => {
   const [studentClass, setStudentClass] = useState('');
   const [studentDOB, setStudentDOB] = useState('');
   const [studentGender, setStudentGender] = useState('');
-  const [studentData, setStudentData] = useState([]);
+  // const [studentData, setStudentData] = useState([]);
 
-  const submitHandler = e => {
+  const setHandler = e => {
     e.preventDefault();
-    const singleStudentData = {
-      studentGender: studentGender,
-      studentDOB: studentDOB,
-      studentClass: studentClass,
-      studentEmail,
-      studentId,
-      studentMobileNo,
-      studentName,
-      password: new Date().getTime().toString(),
-    };
-    setStudentData([...studentData, singleStudentData]);
-    console.log(studentData);
-    setStudentClass('');
-    setStudentDOB('');
-    setStudentEmail('');
-    setStudentGender('');
-    setStudentId('');
-    setStudentMobileNo('');
-    setStudentName('');
+    console.log('asad');
+    console.log(studentName);
+    setStudentClass(studentClass);
+    setStudentDOB(studentDOB);
+    setStudentEmail(studentEmail);
+    setStudentGender(studentGender);
+    setStudentId(studentId);
+    setStudentMobileNo(studentMobileNo);
+    setStudentName(studentName);
   };
-
-  useEffect(() => {
-    localStorage.setItem('students', JSON.stringify(studentData));
-  }, [studentData]);
 
   return (
     <Center>
       <Box>
-        <form onSubmit={submitHandler}>
+        <form
+          onSubmit={() =>
+            onSubmit(
+              studentClass,
+              studentDOB,
+              studentEmail,
+              studentGender,
+              studentId,
+              studentMobileNo,
+              studentName
+            )
+          }
+        >
           <Grid templateColumns="repeat(2, 1fr)" gap={6}>
             <GridItem w="100%">
               <FormControl isRequired>
@@ -143,7 +141,9 @@ const StudentRegistrationForm = () => {
             </GridItem>
           </Grid>
           <Center marginTop={5} marginBottom={5}>
-            <Button type="submit">Submit</Button>
+            <Button type="submit" onClick={e => setHandler(e)}>
+              Submit
+            </Button>
           </Center>
         </form>
       </Box>

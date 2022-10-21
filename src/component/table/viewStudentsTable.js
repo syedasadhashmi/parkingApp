@@ -12,9 +12,9 @@ import {
   TableContainer,
 } from '@chakra-ui/react';
 
-const ViewStudentsTable = () => {
+const ViewStudentsTable = ({ studentData }) => {
   const [registeredStudent, setRegisteredStudent] = useState([]);
-  console.log('asad');
+  console.log(studentData);
   useEffect(() => {
     const getStudentData = JSON.parse(localStorage.getItem('students'));
     console.log(getStudentData);

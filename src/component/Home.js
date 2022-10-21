@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Tabs,
   TabList,
@@ -16,10 +16,36 @@ import ViewStudentsTable from './table/viewStudentsTable';
 import ViewFeedbackTable from './table/viewFeedbackTable';
 import { Link } from 'react-router-dom';
 
-const Home = () => {
-  useEffect(() => {
-    console.log(JSON.parse(localStorage.getItem('students')));
-  }, []);
+const Home = props => {
+  const [studentData, setStudentData] = useState([]);
+
+  function submitHandler(
+    e,
+    studentClass,
+    studentData,
+    studentDOB,
+    studentEmail,
+    studentGender,
+    studentId,
+    studentMobileNo,
+    studentName
+  ) {
+    e.preventDefault();
+    console.log('dasa');
+
+    const singleStudentData = {
+      studentGender: studentGender,
+      studentDOB: studentDOB,
+      studentClass: studentClass,
+      studentEmail,
+      studentId,
+      studentMobileNo,
+      studentName,
+      password: new Date().getTime().toString(),
+    };
+    setStudentData([...studentData, singleStudentData]);
+    console.log(studentData);
+  }
   return (
     <Layout>
       <Center>
@@ -29,9 +55,7 @@ const Home = () => {
               <TabList>
                 <Tab>Add Student</Tab>
                 <Tab>View Bookings</Tab>
-                <Link to={'/viewStudentTable'}>
-                  <Tab>View Students</Tab>
-                </Link>
+                <Tab>View Students</Tab>
                 <Tab>View Feedbacks</Tab>
                 <Tab>
                   <Button>Logout</Button>
@@ -41,13 +65,13 @@ const Home = () => {
 
             <TabPanels>
               <TabPanel>
-                <StudentRegistrationForm />
+                <StudentRegistrationForm onSubmit={submitHandler} />
               </TabPanel>
               <TabPanel>
                 <ViewBookingTable />
               </TabPanel>
               <TabPanel>
-                <ViewStudentsTable />
+                <ViewStudentsTable studentData={studentData} />
               </TabPanel>
               <TabPanel>
                 <ViewFeedbackTable />
